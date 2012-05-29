@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmProduct.Core", "FarmProduct.Core\FarmProduct.Core.csproj", "{6FBECD1F-71EF-482E-B721-F5DF9663546F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmProduct.Model", "FarmProduct.Model\FarmProduct.Model.csproj", "{1F000095-D4DA-4587-A638-656AD88679E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmProduct.Web", "FarmProduct.Web\FarmProduct.Web.csproj", "{ECE36F2B-1BE1-4397-8BAB-911990FF3689}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FBECD1F-71EF-482E-B721-F5DF9663546F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FBECD1F-71EF-482E-B721-F5DF9663546F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FBECD1F-71EF-482E-B721-F5DF9663546F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FBECD1F-71EF-482E-B721-F5DF9663546F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F000095-D4DA-4587-A638-656AD88679E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F000095-D4DA-4587-A638-656AD88679E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F000095-D4DA-4587-A638-656AD88679E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F000095-D4DA-4587-A638-656AD88679E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE36F2B-1BE1-4397-8BAB-911990FF3689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE36F2B-1BE1-4397-8BAB-911990FF3689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE36F2B-1BE1-4397-8BAB-911990FF3689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE36F2B-1BE1-4397-8BAB-911990FF3689}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

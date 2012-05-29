@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+@using FarmProduct.Web.Models
+@model LogOnModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farm Product-logOn</title>
+    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/invalid.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        ul
+        {
+            list-style: none;
+        }
+        .validation-summary-errors
+        {
+        }
+    </style>
+</head>
+<body id="login">
+    @using (Html.BeginForm("LogOn", "Account"))
+    {
+        <div id="login-wrapper" class="png_bg">
+            <div id="login-top" >
+                <h1>
+                    赣农畜产品监管系统</h1>
+                <!-- Logo (221px width) -->
+                <img id="logo" src="@Url.Content("~/Content/images/logo.png")" alt="Simpla Admin logo" />
+            </div>
+            <!-- End #logn-top -->
+            <div id="login-content">
+                <div class="notification information png_bg">
+                    <div style="height: 20px; vertical-align: middle">
+                        @Html.ValidationSummary(true, "")
+                    </div>
+                </div>
+                <p>
+                    <label>
+                        Username</label>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "text-input" })
+                </p>
+                <div class="clear">
+                </div>
+                <p>
+                    <label>
+                        Password</label>
+                    @Html.PasswordFor(m => m.Password, new { @class = "text-input" })
+                </p>
+                <div class="clear">
+                </div>
+                <p id="remember-password">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    Remember me
+                </p>
+                <div class="clear">
+                </div>
+                <p>
+                    <input class="button" type="submit" value="Sign In" />
+                </p>
+            </div>
+            <!-- End #login-content -->
+        </div>
+    }
+</body>
+</html>

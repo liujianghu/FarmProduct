@@ -1,0 +1,153 @@
+﻿@using FarmProduct.Web.Common
+@using FarmProduct.Model
+@model FarmProduct.Web.Models.CompanyEditModel
+           
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="@Url.Content("~/Content/css/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            修改企业</h3>
+        <ul class="content-box-tabs">
+            <li><a href="@Url.Action("Index")" class="default-tab">返回列表</a></li>
+        </ul>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="content-box-content">
+        <div style="color:Red">
+        @Html.ValidationSummary(true, "")
+        </div>
+        <div class="tab-content default-tab" id="tab2">
+            @using (Html.BeginForm("Edit", "Company", FormMethod.Post, new { @class = "form" }))
+            {
+                @Html.HiddenFor(model => model.Id)
+                <fieldset>
+                    <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+                    <p>
+                        <label>
+                            企业名字</label>
+                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "text-input small-input", @style = "width:150px" })
+                        <span class="input-notification success png_bg">必须输入</span>
+                    </p>
+                    <p>
+                        <label>
+                            企业类别</label>
+                        @Html.DropDownList("CompanyType", Utilts.CompanyTypeList)
+                    </p>
+                    <p>
+                        <label>
+                            省份</label>
+                        @Html.DropDownList("ProvinceId", new SelectList(Utilts.Provinces, "Id", "ProvinceName", Model.ProvinceId), "请选择省份")
+                    </p>
+                    <p>
+                        <label>
+                            城市</label>
+                        @Html.DropDownList("CityId", new SelectList(new List<City>(), "Id", "CityName", Model.CityId), "请选择城市")
+                    </p>
+                    <p>
+                        <label>
+                            县</label>
+                            @Html.DropDownList("DistrictId", new SelectList(new List<District>(), "Id", "DistrictName", Model.DistrictId), "请选择县")
+                    </p>
+                    <p>
+                        <label>
+                            电子邮件</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "text-input small-input", @style = "width:150px" })
+                        <span class="input-notification success png_bg">必须输入</span>
+                    </p>
+                    <p>
+                        <label>
+                            联系地址</label>
+                        @Html.TextBoxFor(model => model.Address, new { @class = "text-input medium-input", @style = "width:200px" })
+                        <span class="input-notification success png_bg">必须输入</span>
+                    </p>
+                    <p>
+                        <label>
+                            联系电话</label>
+                        @Html.TextBoxFor(model => model.Telephone, new { @class = "text-input tiny-input", @style = "width:100px" })
+                        <span class="input-notification success png_bg">必须输入</span>
+                    </p>
+                    <p>
+                        <input class="button" type="submit" value="Submit" />
+                    </p>
+                </fieldset>
+                <div class="clear">
+                </div>
+                <!-- End .clear -->
+            }
+        </div>
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $('#ProvinceId').bind('change', function (e) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LoadCityByProvinceId")',
+                datatype: 'json',
+                data: ({ provinceId: $('#ProvinceId').val() }),
+                success: function (response) {
+                    $("#CityId > option").remove();
+                    var cities = response;
+                    $('#CityId').append($('<option />')
+                                     .val('0')
+                                     .text('请选择城市'));
+                    for (var i = 0; i < cities.length; i++) {
+                        $('#CityId').append($('<option />')
+                                     .val(cities[i].Id)
+                                     .text(cities[i].CityName));
+                    }
+                }
+            });
+        });
+
+        $('#CityId').bind('change', function (e) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LoadDistrictByCityId")',
+                datatype: 'json',
+                data: ({ cityId: $('#CityId').val() }),
+                success: function (response) {
+                    $('#DistrictId > option').remove();
+                    var districts = response;
+                    for (var i = 0; i < districts.length; i++) {
+                        $('#DistrictId').append($('<option />')
+                                                .val(districts[i].Id)
+                                                .text(districts[i].DistrictName));
+                    }
+                }
+            });
+        });
+
+        LoadCity();
+    })
+
+    function LoadCity() {
+        alert($('#ProvinceId').val());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("LoadCityByProvinceId")',
+            datatype: 'json',
+            data: ({ provinceId: $('#ProvinceId').val() }),
+            success: function (response) {
+                $("#CityId > option").remove();
+                var cities = response;
+                $('#CityId').append($('<option />')
+                                     .val('0')
+                                     .text('请选择城市'));
+                for (var i = 0; i < cities.length; i++) {
+                    $('#CityId').append($('<option />')
+                                     .val(cities[i].Id)
+                                     .text(cities[i].CityName));
+                }
+            }
+        });
+    }
+</script>
+
