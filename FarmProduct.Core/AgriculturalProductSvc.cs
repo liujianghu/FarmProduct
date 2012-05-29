@@ -5,6 +5,7 @@ using System.Linq;
 using FarmProduct.Model;
 using FarmProduct.Core;
 using FarmProduct.Core.Extensioins;
+using Simple.Data;
 
 namespace FarmProduct.Core
 {
@@ -24,7 +25,7 @@ namespace FarmProduct.Core
             , ProductStatus productStatus)
         {
             int skipCount = (pageIndex - 1) * pageSize;
-            int totalCount;
+            Future<int> totalCount;
 
             var db = DataBaseHelper.Open();
 
@@ -44,7 +45,7 @@ namespace FarmProduct.Core
                                                               .Take(pageSize)
                                                               .ToList<AgriculturalProduct>();
 
-            return new Tuple<List<AgriculturalProduct>, int>(list, totalCount);
+            return new Tuple<List<AgriculturalProduct>, int>(list, totalCount.Value);
         }
 
         public static int Insert(AgriculturalProduct product)

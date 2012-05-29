@@ -135,5 +135,38 @@ namespace FarmProduct.Web.Common
             return null;
         }
 
+        public static List<City> LoadCityByProvinceId(int provinceId)
+        {
+            XDocument xdoc = XDocument.Load(HttpContext.Current.Server.MapPath("~/Content/Cities.xml"));
+
+            var data = (from c in xdoc.Descendants("City")
+                            where c.Attribute("PID").Value == provinceId.ToString()
+                            select new City
+                            {
+                                Id = Convert.ToInt32(c.Attribute("ID").Value),
+                                CityName = c.Attribute("CityName").Value
+                            })
+                            .OrderBy(c => c.CityName)
+                            .ToList();
+
+            return data;
+        }
+
+        public static List<District> LoadDistrictByCityId(int cityId)
+        {
+            XDocument xdoc = XDocument.Load(HttpContext.Current.Server.MapPath("~/Content/Districts.xml"));
+            var data = (from d in xdoc.Descendants("District")
+                            where d.Attribute("CID").Value == cityId.ToString()
+                            select new District
+                            {
+                                Id = Convert.ToInt32(d.Attribute("ID").Value),
+                                DistrictName = d.Attribute("DistrictName").Value
+                            })
+                            .OrderBy(d => d.DistrictName)
+                            .ToList();
+
+            return data;
+        }
+
     }
 }

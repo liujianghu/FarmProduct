@@ -37,22 +37,22 @@
                     <p>
                         <label>
                             企业类别</label>
-                        @Html.DropDownList("CompanyType", Utilts.CompanyTypeList)
+                        @Html.DropDownList("CompanyType",  new SelectList(Model.CompanyTypeList, "Key", "Value", Model.CompanyType) )
                     </p>
                     <p>
                         <label>
                             省份</label>
-                        @Html.DropDownList("ProvinceId", new SelectList(Utilts.Provinces, "Id", "ProvinceName", Model.ProvinceId), "请选择省份")
+                        @Html.DropDownList("ProvinceId", new SelectList(Model.ProvinceList, "Id", "ProvinceName", Model.ProvinceId), "请选择省份")
                     </p>
                     <p>
                         <label>
                             城市</label>
-                        @Html.DropDownList("CityId", new SelectList(new List<City>(), "Id", "CityName", Model.CityId), "请选择城市")
+                        @Html.DropDownList("CityId", new SelectList(Model.CityList, "Id", "CityName", Model.CityId), "请选择城市")
                     </p>
                     <p>
                         <label>
                             县</label>
-                            @Html.DropDownList("DistrictId", new SelectList(new List<District>(), "Id", "DistrictName", Model.DistrictId), "请选择县")
+                            @Html.DropDownList("DistrictId", new SelectList(Model.DistrictList, "Id", "DistrictName", Model.DistrictId), "请选择县")
                     </p>
                     <p>
                         <label>
@@ -125,29 +125,7 @@
             });
         });
 
-        LoadCity();
     })
 
-    function LoadCity() {
-        alert($('#ProvinceId').val());
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("LoadCityByProvinceId")',
-            datatype: 'json',
-            data: ({ provinceId: $('#ProvinceId').val() }),
-            success: function (response) {
-                $("#CityId > option").remove();
-                var cities = response;
-                $('#CityId').append($('<option />')
-                                     .val('0')
-                                     .text('请选择城市'));
-                for (var i = 0; i < cities.length; i++) {
-                    $('#CityId').append($('<option />')
-                                     .val(cities[i].Id)
-                                     .text(cities[i].CityName));
-                }
-            }
-        });
-    }
 </script>
 

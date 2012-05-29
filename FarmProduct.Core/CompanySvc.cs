@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FarmProduct.Model;
+using Simple.Data;
 
 namespace FarmProduct.Core
 {
@@ -42,7 +43,7 @@ namespace FarmProduct.Core
             var db = DataBaseHelper.Open();
 
             int skipCount = (pageIndex - 1) * pageSize;
-            int totalCount;
+            Future<int> totalCount;
 
             var list = db.Companies.FindAll(db.Companies.IsDeleted == false)
                                                 .OrderByDescending(db.Companies.CompanyName)
@@ -51,7 +52,7 @@ namespace FarmProduct.Core
                                                 .Take(pageSize)
                                                 .ToList<Company>();
 
-            return new Tuple<List<Company>, int>(list, totalCount);
+            return new Tuple<List<Company>, int>(list, totalCount.Value);
 
         }
 

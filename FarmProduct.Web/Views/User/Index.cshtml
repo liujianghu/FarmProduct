@@ -1,0 +1,161 @@
+﻿@using FarmProduct.Model
+@using FarmProduct.Web.Common
+@model FarmProduct.Web.Models.ListViewModel<User>
+@{
+    ViewBag.Title = "Index";
+    int j = 0;
+}
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            用户列表</h3>
+        <ul class="content-box-tabs">
+            <li><a href="@Url.Action("Create")" class="default-tab">添加用户</a></li>
+        </ul>
+        <div class="clear">
+        </div>
+    </div>
+    <!-- End .content-box-header -->
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <!-- This is the target div. id must match the href of this div's tab -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            公司名称
+                        </th>
+                        <th>
+                            公司类别
+                        </th>
+                        <th>
+                            省/市/县
+                        </th>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            联系电话
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <div class="pagination">
+                                <a href="@Url.Action("Index", new { pageIndex = 1 })" title="First Page">&laquo; First</a>
+                                @if (Model.CurrentPageIndex > 1)
+                                {
+                                    <a href="@Url.Action("Index", new { pageIndex = @Model.CurrentPageIndex - 1 })" title="Previous Page">
+                                        &laquo; Previous</a> 
+                                }
+                                @for (int i = 1; i <= Model.PageCount; i++)
+                                {
+                                    if (Model.CurrentPageIndex == i)
+                                    {
+                                    <a href="@Url.Action("Index", new { pageIndex = i })" class="number current" title="@i">@i</a>
+                                    }
+                                    else
+                                    {
+                                    <a href="@Url.Action("Index", new { pageIndex = i })" class="number" title="1">@i</a>
+                                    }
+
+                                }
+                                @if (Model.CurrentPageIndex < Model.PageCount)
+                                {
+                                    <a href="@Url.Action("Index", new { pageIndex = @Model.CurrentPageIndex + 1 })" title="Next Page">
+                                        Next &raquo;</a>
+                                }
+                                <a href="@Url.Action("Index", new { pageIndex = @Model.PageCount })" title="Last Page">
+                                    Last &raquo;</a>
+                            </div>
+                            <!-- End .pagination -->
+                            <div class="clear">
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        if (j % 2 == 0)
+                        {
+                        <tr class="alt-row">
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                            @Utilts.CompanyTypeDic[item.CompanyType]
+                            </td>
+                            <td>
+                                @item.Province.ProvinceName / @item.City.CityName /  @item.Dictrict.DistrictName
+                            </td>
+                            <td>
+                                @item.Address
+                            </td>
+                            <td>
+                                @item.Telephone
+                            </td>
+                            <td>
+                                <!-- Icons -->
+                                <a href="@Url.Action("Edit", "Company", new { id = @item.Id })" title="Edit">
+                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" /></a>
+                               <a href="javascript:;" onclick="deleteCompany(@item.Id)" title="Delete">
+                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
+                            </td>
+                        </tr>
+                        }
+                        else
+                        {
+                        <tr>
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                                @Utilts.CompanyTypeDic[item.CompanyType]
+                            </td>
+                            <td>
+                                @item.Province.ProvinceName / @item.City.CityName / @item.Dictrict.DistrictName
+                            </td>
+                            <td>
+                                @item.Address
+                            </td>
+                            <td>
+                                @item.Telephone
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Company", new { id = @item.Id })" title="Edit">
+                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" /></a>
+                                <a href="javascript:;" onclick="deleteCompany(@item.Id)" title="Delete">
+                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
+                            </td>
+                        </tr>
+                        }
+                        j++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End #tab1 -->
+        <!-- End #tab2 -->
+    </div>
+    <!-- End .content-box-content -->
+</div>
+
+<script language="javascript" type="text/javascript">
+    function deleteCompany(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete") ',
+            data: ({ id: id }),
+            datatype: 'json',
+            success: function (data) {
+                window.location.href = '@Url.Action("Index") '
+            }
+        });
+    }
+</script>

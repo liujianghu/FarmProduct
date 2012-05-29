@@ -84,6 +84,14 @@ namespace FarmProduct.Web.Controllers
         [HttpPost]
         public ActionResult Edit(CompanyEditModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "请正确输入信息！");
+                return View(model);
+            }
+
+            CompanySvc.Update(model.ToCompany());
+
             return RedirectToAction("Index");
         }
 
@@ -99,15 +107,7 @@ namespace FarmProduct.Web.Controllers
         {
             XDocument xdoc = XDocument.Load(Server.MapPath("~/Content/Cities.xml"));
 
-            var data = (from c in xdoc.Descendants("City")
-                        where c.Attribute("PID").Value == provinceId.ToString()
-                        select new City
-                        {
-                            Id = Convert.ToInt32(c.Attribute("ID").Value),
-                            CityName = c.Attribute("CityName").Value
-                        })
-                                .OrderBy(c => c.CityName)
-                                .ToList();
+            var data = Utilts.LoadCityByProvinceId(provinceId);
             return this.Json(data);
         }
 
@@ -115,15 +115,8 @@ namespace FarmProduct.Web.Controllers
         public JsonResult LoadDistrictByCityId(int cityId)
         {
             XDocument xdoc = XDocument.Load(Server.MapPath("~/Content/Districts.xml"));
-            var data = (from d in xdoc.Descendants("District")
-                                where d.Attribute("CID").Value == cityId.ToString()
-                                select new District
-                                {
-                                    Id = Convert.ToInt32(d.Attribute("ID").Value),
-                                    DistrictName = d.Attribute("DistrictName").Value
-                                })
-                                .OrderBy(d => d.DistrictName)
-                                .ToList();
+            var data = Utilts.LoadDistrictByCityId(cityId);
+
             return this.Json(data);
         }
 

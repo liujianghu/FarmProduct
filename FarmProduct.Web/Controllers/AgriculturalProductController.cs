@@ -31,5 +31,11 @@ namespace FarmProduct.Web.Controllers
             return View(model);
         }
 
+        [UserAuthorize(Role.FarmProductUser)]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
     }
 }

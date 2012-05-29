@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FarmProduct.Model;
 using System.Configuration;
+using Simple.Data;
 
 namespace FarmProduct.Core
 {
@@ -54,7 +55,7 @@ namespace FarmProduct.Core
         public static Tuple<List<User>, int> LoadUserListByCompanyId(int companyId, int pageIndex, int pageSize)
         {
             int skipCount = (pageIndex - 1) * pageSize;
-            int totalCount;
+            Future<int> totalCount;
 
             var db = DataBaseHelper.Open();
             List<User> list = db.Users.FindAll(db.Users.CompanyId == companyId && !db.Users.IsDeleted)
@@ -64,13 +65,13 @@ namespace FarmProduct.Core
                                                               .Take(pageSize)
                                                               .ToList<User>();
 
-            return new Tuple<List<User>, int>(list, totalCount);
+            return new Tuple<List<User>, int>(list, totalCount.Value);
         }
 
         public static Tuple<List<User>, int> LoadAllUserList(int pageIndex, int pageSize)
         {
             int skipCount = (pageIndex - 1) * pageSize;
-            int totalCount;
+            Future<int> totalCount;
 
             var db = DataBaseHelper.Open();
             List<User> list = db.Users.FindAll()
@@ -80,7 +81,7 @@ namespace FarmProduct.Core
                                                     .Take(pageSize)
                                                     .ToList<User>();
 
-            return new Tuple<List<User>, int>(list, totalCount);
+            return new Tuple<List<User>, int>(list, totalCount.Value);
         }
 
         public static void Delete(int id)

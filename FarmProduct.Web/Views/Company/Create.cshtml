@@ -37,22 +37,22 @@
                     <p>
                         <label>
                             企业类别</label>
-                        @Html.DropDownList("CompanyType", Utilts.CompanyTypeList)
+                        @Html.DropDownList("CompanyType", new SelectList(Model.CompanyTypeList, "key", "value"), "请选择企业类别")
                     </p>
                     <p>
                         <label>
                             省份</label>
-                        @Html.DropDownList("ProvinceId", new SelectList(Utilts.Provinces, "Id", "ProvinceName"), "请选择省份")
+                        @Html.DropDownList("ProvinceId", new SelectList(Model.ProvinceList, "Id", "ProvinceName"), "请选择省份")
                     </p>
                     <p>
                         <label>
                             城市</label>
-                        @Html.DropDownList("CityId", new SelectList(new List<City>(), "Id", "CityName"), "请选择城市")
+                        @Html.DropDownList("CityId", new SelectList(Model.CityList, "Id", "CityName"), "请选择城市")
                     </p>
                     <p>
                         <label>
                             县</label>
-                            @Html.DropDownList("DistrictId", new SelectList(new List<District>(), "Id", "DistrictName"), "请选择县")
+                            @Html.DropDownList("DistrictId", new SelectList(Model.DistrictList, "Id", "DistrictName"), "请选择县")
                     </p>
                     <p>
                         <label>
