@@ -1,8 +1,7 @@
-﻿
+﻿@model FarmProduct.Web.Models.ErrorModel
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,5 +11,12 @@
     <h2>
         Sorry, an error occurred while processing your request.
     </h2>
+    <div style="color: Red">
+        Message:
+        @Model.ErrorMessage
+    </div>
+    <div>
+        StackTrace: @Model.StackTrace</div>
+
 </body>
 </html>

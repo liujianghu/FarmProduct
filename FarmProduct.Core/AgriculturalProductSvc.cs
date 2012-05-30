@@ -38,7 +38,7 @@ namespace FarmProduct.Core
             bool isAdmin = AuthorizationSvc.IsAdministrator(user.UserRole);
 
             List<AgriculturalProduct> list = db.AgriculturalProducts.FindAll(db.AgriculturalProducts.ProductStatus == productStatus
-                                                                    && db.AgriculturalProducts.ProductOwner.Id == user.CompanyId) 
+                                                                    && db.AgriculturalProducts.ProductOwner.Id == user.Company.Id) 
                                                               .OrderByDescending(db.AgriculturalProducts.InsertDate)
                                                               .WithTotalCount(out totalCount)
                                                               .Skip(skipCount)

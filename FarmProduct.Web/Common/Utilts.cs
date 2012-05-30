@@ -23,7 +23,9 @@ namespace FarmProduct.Web.Common
                     _companyTypeDic = new Dictionary<int, string>();
                     _companyTypeDic.Add(1, "生产商");
                     _companyTypeDic.Add(2, "批发商");
-                    _companyTypeDic.Add(3, "批发商");
+                    _companyTypeDic.Add(3, "零售商");
+                    _companyTypeDic.Add(4, "检测机关");
+                    _companyTypeDic.Add(999, "系统管理");
                 }
                 return _companyTypeDic;
             }
@@ -47,11 +49,11 @@ namespace FarmProduct.Web.Common
                 if (_companyTypeList == null)
                 {
                     _companyTypeList = (from d in CompanyTypeDic
-                                                    select new SelectListItem
-                                                    {
-                                                        Text = d.Value,
-                                                        Value = d.Key.ToString()
-                                                    }).ToList();
+                                        select new SelectListItem
+                                        {
+                                            Text = d.Value,
+                                            Value = d.Key.ToString()
+                                        }).ToList();
                 }
                 return _companyTypeList;
             }
@@ -79,7 +81,7 @@ namespace FarmProduct.Web.Common
                             Id = Convert.ToInt32(item.Attribute("ID").Value),
                             ProvinceName = item.Attribute("ProvinceName").Value
                         })
-                        .OrderBy(t=>t.ProvinceName)
+                        .OrderBy(t => t.ProvinceName)
                         .ToList();
             return data;
         }
@@ -89,7 +91,7 @@ namespace FarmProduct.Web.Common
             XDocument xdoc = XDocument.Load(HttpContext.Current.Server.MapPath("~/Content/Provinces.xml"));
             var data = xdoc.Descendants("Province").FirstOrDefault(t => t.Attribute("ID").Value == id.ToString());
 
-            if(data !=null)
+            if (data != null)
             {
                 return new Province
                 {
@@ -140,12 +142,12 @@ namespace FarmProduct.Web.Common
             XDocument xdoc = XDocument.Load(HttpContext.Current.Server.MapPath("~/Content/Cities.xml"));
 
             var data = (from c in xdoc.Descendants("City")
-                            where c.Attribute("PID").Value == provinceId.ToString()
-                            select new City
-                            {
-                                Id = Convert.ToInt32(c.Attribute("ID").Value),
-                                CityName = c.Attribute("CityName").Value
-                            })
+                        where c.Attribute("PID").Value == provinceId.ToString()
+                        select new City
+                        {
+                            Id = Convert.ToInt32(c.Attribute("ID").Value),
+                            CityName = c.Attribute("CityName").Value
+                        })
                             .OrderBy(c => c.CityName)
                             .ToList();
 
@@ -156,16 +158,35 @@ namespace FarmProduct.Web.Common
         {
             XDocument xdoc = XDocument.Load(HttpContext.Current.Server.MapPath("~/Content/Districts.xml"));
             var data = (from d in xdoc.Descendants("District")
-                            where d.Attribute("CID").Value == cityId.ToString()
-                            select new District
-                            {
-                                Id = Convert.ToInt32(d.Attribute("ID").Value),
-                                DistrictName = d.Attribute("DistrictName").Value
-                            })
+                        where d.Attribute("CID").Value == cityId.ToString()
+                        select new District
+                        {
+                            Id = Convert.ToInt32(d.Attribute("ID").Value),
+                            DistrictName = d.Attribute("DistrictName").Value
+                        })
                             .OrderBy(d => d.DistrictName)
                             .ToList();
 
             return data;
+        }
+
+        public static Role LoadRoleByCompanyType(int companyType)
+        {
+            switch (companyType)
+            {
+                case 1:
+                    return Role.FarmProductUser;
+                case 2:
+                    return Role.WholeSaleUser;
+                case 3:
+                    return Role.RetailUser;
+                case 4:
+                    return Role.SecurityChecker;
+                case 999:
+                    return Role.Admin;
+                default:
+                    throw new Exception("无法找到公司对应的角色类型.");
+            }
         }
 
     }

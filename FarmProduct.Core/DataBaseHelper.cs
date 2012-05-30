@@ -46,12 +46,13 @@ namespace FarmProduct.Core
 
         private static void InsertData(MongoDatabase db)
         {
+            var company = CompanySvc.LoadById(1);
             var user = new User
             {
                 Id = 1,
                 UserName = "admin",
                 Password = ConfigurationManager.AppSettings[Constants.DefaultAdminPwdKey].ToString(),
-                CompanyId = 0,
+                Company = company,
                 Email = "",
                 RealName= "Administrator",
                 UserRole = Role.Admin

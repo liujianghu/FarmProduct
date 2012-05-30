@@ -6,7 +6,7 @@ using System.Text;
 namespace FarmProduct.Model
 {
     [Flags]
-    public enum Role
+    public enum Role 
     {
         Guest = 0,
         Admin = 1,

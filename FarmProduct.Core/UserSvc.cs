@@ -58,7 +58,7 @@ namespace FarmProduct.Core
             Future<int> totalCount;
 
             var db = DataBaseHelper.Open();
-            List<User> list = db.Users.FindAll(db.Users.CompanyId == companyId && !db.Users.IsDeleted)
+            List<User> list = db.Users.FindAll(db.Users.Company.Id == companyId && !db.Users.IsDeleted)
                                                               .OrderByDescending(db.Users.RealName)
                                                               .WithTotalCount(out totalCount)
                                                               .Skip(skipCount)
@@ -74,7 +74,7 @@ namespace FarmProduct.Core
             Future<int> totalCount;
 
             var db = DataBaseHelper.Open();
-            List<User> list = db.Users.FindAll()
+            List<User> list = db.Users.Query()
                                                     .OrderByDescending(db.Users.RealName)
                                                     .WithTotalCount(out totalCount)
                                                     .Skip(skipCount)
@@ -96,12 +96,25 @@ namespace FarmProduct.Core
                 && adminPwd.Equals(ConfigurationManager.AppSettings[Constants.DefaultAdminPwdKey], StringComparison.OrdinalIgnoreCase))
             {
                 var db = DataBaseHelper.Open();
+
+                int companyId = CompanySvc.Insert(new Company
+                {
+                    CompanyType = 999,
+                    CompanyName = "系统管理部",
+                    City = new City { Id = 124, CityName = "南昌市" },
+                    Province = new Province { Id = 14, ProvinceName = "江西省" },
+                    Dictrict = new District { Id = 1126, DistrictName = "青云谱区" },
+                    Address = "",
+                    Telephone = "",
+                    Email = ""
+                });
+
                 var user = new User
                 {
-                    Id = 1,
+                    Id = LastIdSvc.GetNextTableId("Users"),
                     UserName = "admin",
                     Password = ConfigurationManager.AppSettings[Constants.DefaultAdminPwdKey].ToString(),
-                    CompanyId = 0,
+                    Company = CompanySvc.LoadById(companyId),
                     Email = "",
                     RealName = "Administrator",
                     UserRole = Role.Admin

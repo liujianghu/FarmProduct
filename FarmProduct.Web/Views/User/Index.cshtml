@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Index";
     int j = 0;
+    string trclass = "";
 }
 <div class="content-box">
     <!-- Start Content Box -->
@@ -24,19 +25,22 @@
                 <thead>
                     <tr>
                         <th>
-                            公司名称
+                            用户编号
                         </th>
                         <th>
-                            公司类别
+                            用户登录名
                         </th>
                         <th>
-                            省/市/县
+                            真实姓名
                         </th>
                         <th>
-                            地址
+                           所在公司
                         </th>
                         <th>
                             联系电话
+                        </th>
+                        <th>
+                            拥有权限
                         </th>
                         <th>
                             操作
@@ -84,57 +88,42 @@
                     {
                         if (j % 2 == 0)
                         {
-                        <tr class="alt-row">
-                            <td>
-                                @item.CompanyName
-                            </td>
-                            <td>
-                            @Utilts.CompanyTypeDic[item.CompanyType]
-                            </td>
-                            <td>
-                                @item.Province.ProvinceName / @item.City.CityName /  @item.Dictrict.DistrictName
-                            </td>
-                            <td>
-                                @item.Address
-                            </td>
-                            <td>
-                                @item.Telephone
-                            </td>
-                            <td>
-                                <!-- Icons -->
-                                <a href="@Url.Action("Edit", "Company", new { id = @item.Id })" title="Edit">
-                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" /></a>
-                               <a href="javascript:;" onclick="deleteCompany(@item.Id)" title="Delete">
-                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
-                            </td>
-                        </tr>
+                            trclass = "alt-row";
                         }
                         else
                         {
-                        <tr>
+                            trclass = "";
+                        }
+                         <tr class="@trclass">
                             <td>
-                                @item.CompanyName
+                                @item.Id
                             </td>
                             <td>
-                                @Utilts.CompanyTypeDic[item.CompanyType]
+                                @item.UserName
                             </td>
                             <td>
-                                @item.Province.ProvinceName / @item.City.CityName / @item.Dictrict.DistrictName
+                                @item.RealName
                             </td>
                             <td>
-                                @item.Address
+                                @if (item.Company != null)
+                                {@item.Company.CompanyName}
+ 
                             </td>
                             <td>
                                 @item.Telephone
                             </td>
                             <td>
-                                <a href="@Url.Action("Edit", "Company", new { id = @item.Id })" title="Edit">
+                                @item.UserRole
+                            </td>
+                            <td>
+                                <!-- Icons -->
+                                <a href="@Url.Action("Edit", "User", new { id = @item.Id })" title="Edit">
                                     <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" /></a>
-                                <a href="javascript:;" onclick="deleteCompany(@item.Id)" title="Delete">
+                               <a href="javascript:;" onclick="deleteUser(@item.Id)" title="Delete">
                                     <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
                             </td>
                         </tr>
-                        }
+                        
                         j++;
                     }
                 </tbody>
@@ -147,7 +136,10 @@
 </div>
 
 <script language="javascript" type="text/javascript">
-    function deleteCompany(id) {
+    function deleteUser(id) {
+        if (!confirm("你确定删除此用户吗?")) {
+            return;
+        }
         $.ajax({
             type: "POST",
             url: '@Url.Action("Delete") ',

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 
 using FarmProduct.Core;
 using FarmProduct.Model;
-using FarmProduct.Web.Models;
 using FarmProduct.Web.Common;
-using System.Security.Principal;
+using FarmProduct.Web.Extensions;
+using FarmProduct.Web.Models;
 
 namespace FarmProduct.Web.Controllers
 {
@@ -30,27 +31,34 @@ namespace FarmProduct.Web.Controllers
             }
             else
             {
-                tuple = UserSvc.LoadUserListByCompanyId(user.CompanyId, pageIndex, PAGESIZE);
+                tuple = UserSvc.LoadUserListByCompanyId(user.Company.Id, pageIndex, PAGESIZE);
             }
 
             model.Items = tuple.Item1;
             model.PageCount = Utilts.CalculatePageCount(tuple.Item2, PAGESIZE);
             model.CurrentPageIndex = pageIndex;
-            return View();
+            return View(model);
         }
 
         [UserAuthorize(Role.Admin)]
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var model = new UserEditModel();
+            return View(model);
         }
 
         [UserAuthorize(Role.Admin)]
         [HttpPost]
-        public ActionResult Create(User user)
+        public ActionResult Create(UserEditModel model)
         {
-            UserSvc.Insert(user);
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "请输入正确信息!");
+                return View(model);
+            }
+
+            UserSvc.Insert(model.ToUser());
             return RedirectToAction("Index");
         }
 
@@ -67,14 +75,21 @@ namespace FarmProduct.Web.Controllers
         public ActionResult Edit(int id)
         {
             var user = UserSvc.LoadById(id);
-            return View(user);
+            var model = new UserEditModel(user);
+            return View(model);
         }
 
         [UserAuthorize(Role.Admin)]
         [HttpPost]
-        public ActionResult Edit(User user)
+        public ActionResult Edit(UserEditModel model)
         {
-            UserSvc.Update(user);
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "请输入正确信息!");
+                return View(model);
+            }
+
+            UserSvc.Update(model.ToUser());
             return RedirectToAction("Index");
         }
 

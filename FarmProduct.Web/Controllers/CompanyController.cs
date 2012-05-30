@@ -47,6 +47,7 @@ namespace FarmProduct.Web.Controllers
                 ModelState.AddModelError("", "请正确输入信息！");
                 return View(model);
             }
+            
             CompanySvc.Insert(model.ToCompany());
             return RedirectToAction("Index");
         }
@@ -57,7 +58,7 @@ namespace FarmProduct.Web.Controllers
         {
             IIdentity identity = HttpContext.User.Identity;
             var user = UserSvc.LoadByUserName(identity.Name);
-            if (!AuthorizationSvc.IsAdministrator(user.UserRole) && user.CompanyId != id)
+            if (!AuthorizationSvc.IsAdministrator(user.UserRole) && user.Company.Id != id)
             {
                 return RedirectToRoute("UnAuthorize");
             }
