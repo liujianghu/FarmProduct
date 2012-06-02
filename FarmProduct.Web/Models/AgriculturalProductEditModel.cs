@@ -93,7 +93,6 @@ namespace FarmProduct.Web.Models
         }
 
         public AgriculturalProductEditModel(AgriculturalProduct product)
-            : this()
         {
             this.Id = product.Id;
             this.ProductName = product.ProductName;

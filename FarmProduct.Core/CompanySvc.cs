@@ -32,6 +32,14 @@ namespace FarmProduct.Core
             return list;
         }
 
+        public static List<Company> LoadCompanyByType(short companyType)
+        {
+            var db = DataBaseHelper.Open();
+            var list = db.Companies.FindAll(db.Companies.IsDeleted == false && db.Companies.CompanyType == companyType)
+                                                .ToList<Company>();
+            return list;
+        }
+
         public static void Update(Company company)
         {
             var db = DataBaseHelper.Open();

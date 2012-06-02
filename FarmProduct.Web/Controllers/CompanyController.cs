@@ -82,6 +82,7 @@ namespace FarmProduct.Web.Controllers
             return View(model);
         }
 
+        [UserAuthorize(Role.Admin)]
         [HttpPost]
         public ActionResult Edit(CompanyEditModel model)
         {

@@ -28,7 +28,7 @@ namespace FarmProduct.Model
         /// <summary>
         /// 已批发
         /// </summary>
-        WholeSaled = 5,
+        WholeSold = 5,
 
         /// <summary>
         /// 零售状态： 可分割，可销售

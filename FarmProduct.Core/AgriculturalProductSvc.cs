@@ -39,7 +39,7 @@ namespace FarmProduct.Core
 
             List<AgriculturalProduct> list = db.AgriculturalProducts.FindAll(db.AgriculturalProducts.ProductStatus == productStatus
                                                                     && db.AgriculturalProducts.ProductOwner.Id == user.Company.Id)
-                                                              .OrderByDescending(db.AgriculturalProducts.InsertDate)
+                                                              .OrderByDescending(db.AgriculturalProducts.Id)
                                                               .WithTotalCount(out totalCount)
                                                               .Skip(skipCount)
                                                               .Take(pageSize)
@@ -70,7 +70,11 @@ namespace FarmProduct.Core
         public static void Delete(int id)
         {
             var db = DataBaseHelper.Open();
-            db.AgriculturalProducts.DeleteById(id);
+
+            AgriculturalProduct product = db.AgriculturalProducts.FindById(id);
+            product.ProductStatus = ProductStatus.IsDeleted;
+
+            db.AgriculturalProducts.Update(product);
         }
 
         public static AgriculturalProduct LoadById(int id)

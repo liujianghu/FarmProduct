@@ -15,7 +15,11 @@ namespace FarmProduct.Model
         [Required(ErrorMessage = "请输入产品名字")]
         public string ProductName { get; set; }
 
+        public string ProductCode { get; set; }
+
         public int AgriculturalProductId { get; set; }
+
+        public string AgriculturalProductName { get; set; }
 
         /// <summary>
         /// 分割父批发产品ID
@@ -30,12 +34,12 @@ namespace FarmProduct.Model
 
         public User InsertBy { get; set; }
 
-        public short ProductStatus { get; set; }
+        public ProductStatus ProductStatus { get; set; }
 
         /// <summary>
         /// 安全状态
         /// </summary>
-        public short SecurityStatus { get; set; }
+        public SecurityStatus SecurityStatus { get; set; }
 
         public DateTime InsertDate { get; set; }
 

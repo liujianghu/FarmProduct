@@ -70,6 +70,7 @@
     <Compile Include="LastIdSvc.cs" />
     <Compile Include="ProvinceSvc.cs" />
     <Compile Include="UserSvc.cs" />
+    <Compile Include="WholeSaleProductSvc.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

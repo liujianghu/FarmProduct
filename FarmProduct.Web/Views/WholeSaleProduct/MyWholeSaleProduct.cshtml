@@ -1,7 +1,7 @@
 ﻿@using FarmProduct.Model
-@model FarmProduct.Web.Models.ListViewModel<AgriculturalProduct>
+@model FarmProduct.Web.Models.ListViewModel<WholeSaleProduct>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "WholeSold";
     int j = 0;
     string strStyle = "";
 }
@@ -9,9 +9,9 @@
     <!-- Start Content Box -->
     <div class="content-box-header">
         <h3>
-            产品列表</h3>
+            已批发产品列表</h3>
         <ul class="content-box-tabs">
-            <li><a href="@Url.Action("Create")" class="default-tab">添加产品</a></li>
+            <li><a href="@Url.Action("Index", "AgriculturalProduct")" class="default-tab">未批发产品</a></li>
         </ul>
         <div class="clear">
         </div>
@@ -25,29 +25,26 @@
                     <img src="@Url.Content("~/Content/images/icons/cross_grey_small.png")" title="Close this notification"
                         alt="close" /></a>
                 <div>
-                    这是你公司所有的原始产品列表
+                    这是你公司已批发的原始产品列表
                 </div>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>
-                            产品编号
+                            农产品名称
                         </th>
                         <th>
-                            产品名称
+                            批发产品名称
                         </th>
                         <th>
-                            产品编码
+                            接收企业
                         </th>
                         <th>
-                            出栏日期
+                            批发人
                         </th>
                         <th>
-                            批次
-                        </th>
-                        <th>
-                            状态
+                            批发时间
                         </th>
                         <th>
                             操作
@@ -58,30 +55,31 @@
                     <tr>
                         <td colspan="6">
                             <div class="pagination">
-                                <a href="@Url.Action("Index", new { pageIndex = 1 })" title="First Page">&laquo; First</a>
+                                <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = 1 })" title="First Page">&laquo;
+                                    First</a>
                                 @if (Model.CurrentPageIndex > 1)
                                 {
-                                    <a href="@Url.Action("Index", new { pageIndex = @Model.CurrentPageIndex - 1 })" title="Previous Page">
+                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.CurrentPageIndex - 1 })" title="Previous Page">
                                         &laquo; Previous</a> 
                                 }
                                 @for (int i = 1; i <= Model.PageCount; i++)
                                 {
                                     if (Model.CurrentPageIndex == i)
                                     {
-                                    <a href="@Url.Action("Index", new { pageIndex = i })" class="number current" title="@i">@i</a>
+                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = i })" class="number current" title="@i">@i</a>
                                     }
                                     else
                                     {
-                                    <a href="@Url.Action("Index", new { pageIndex = i })" class="number" title="1">@i</a>
+                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = i })" class="number" title="1">@i</a>
                                     }
 
                                 }
                                 @if (Model.CurrentPageIndex < Model.PageCount)
                                 {
-                                    <a href="@Url.Action("Index", new { pageIndex = @Model.CurrentPageIndex + 1 })" title="Next Page">
+                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.CurrentPageIndex + 1 })" title="Next Page">
                                         Next &raquo;</a>
                                 }
-                                <a href="@Url.Action("Index", new { pageIndex = @Model.PageCount })" title="Last Page">
+                                <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.PageCount })" title="Last Page">
                                     Last &raquo;</a>
                             </div>
                             <!-- End .pagination -->
@@ -103,44 +101,28 @@
                         }
                         <tr class="@strStyle">
                             <td>
-                                @item.Id
+                                @item.AgriculturalProductName
                             </td>
                             <td>
                                 @item.ProductName
                             </td>
                             <td>
-                                @item.ProductCode
+                                @item.ToCompany.CompanyName
                             </td>
                             <td>
-                                @item.InsertDate.ToShortDateString()
+                                @item.InsertBy.RealName
                             </td>
                             <td>
-                                @item.Batch
-                            </td>
-                            <td>
-                                @item.ProductStatus
+                                @item.InsertDate.ToString("yyyy-MM-dd HH:mm")
                             </td>
                             <td>
                                 <!-- Icons -->
-                                
-                                @if (item.ProductStatus == ProductStatus.Procreative || item.SecurityStatus != SecurityStatus.Safe)
+                                <a href="@Url.Action("Detail", "WholeSaleProduct", new { id = @item.Id })" title="查看" target="_blank">
+                                    查看</a>
+                                @if (item.ProductStatus == ProductStatus.WholeSale || item.SecurityStatus != SecurityStatus.Safe)
                                 {
-                                    <a href="@Url.Action("Edit", "AgriculturalProduct", new { id = @item.Id })" title="Edit">
-                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" /></a>
-                                    
-                                    <a href="@Url.Action("Delete", "AgriculturalProduct", new { id = @item.Id })" title="Delete">
+                                    <a href="javascript:;" onclick="deleteProduct(@item.Id)" title="Delete">
                                         <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("Detail", "AgriculturalProduct", new { id = @item.Id })" title="查看">
-                                        查看</a>
-                                }
-                                
-                                @if (item.ProductStatus == ProductStatus.Procreative && item.SecurityStatus == SecurityStatus.Safe)
-                                {
-                                    <a href="@Url.Action("Create", "WholeSaleProduct", new { agriculturalProductId = @item.Id })" title="批发">
-                                        <img src="@Url.Content("~/Content/images/icons/hammer_screwdriver.png")" alt="批发" /></a>
                                 }
                             </td>
                         </tr>
@@ -154,13 +136,14 @@
     </div>
     <!-- End .content-box-content -->
 </div>
-
-
 <script language="javascript" type="text/javascript">
     function deleteProduct(id) {
+        if (!confirm("你确定删除?")) {
+            return;
+        }
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Delete") ',
+            url: '@Url.Action("DeleteWholeSale") ',
             data: ({ id: id }),
             datatype: 'json',
             success: function (response) {
@@ -169,7 +152,7 @@
                     alert(response.ErrorMessage);
                 }
                 else {
-                    window.location.href = '@Url.Action("Index") '
+                    window.location.href = '@Url.Action("MyWholeSaleProduct") '
                 }
             }
         });

@@ -21,11 +21,11 @@ namespace FarmProduct.Web.Common
                 if (_companyTypeDic == null)
                 {
                     _companyTypeDic = new Dictionary<int, string>();
-                    _companyTypeDic.Add(1, "生产商");
-                    _companyTypeDic.Add(2, "批发商");
-                    _companyTypeDic.Add(3, "零售商");
-                    _companyTypeDic.Add(4, "检测机关");
-                    _companyTypeDic.Add(999, "系统管理");
+                    _companyTypeDic.Add((short)CompanyType.AgriculturalCompany, "生产商");
+                    _companyTypeDic.Add((short)CompanyType.WholeSaleCompany, "批发商");
+                    _companyTypeDic.Add((short)CompanyType.RetailCompany, "零售商");
+                    _companyTypeDic.Add((short)CompanyType.SecurityCompany, "检测机关");
+                    _companyTypeDic.Add((short)CompanyType.SystemCompany, "系统管理");
                 }
                 return _companyTypeDic;
             }

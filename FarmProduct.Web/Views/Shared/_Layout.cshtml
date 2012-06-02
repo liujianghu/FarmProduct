@@ -37,8 +37,9 @@
                         <!-- Add the class "current" to current menu item -->
                         产品管理 </a>
                         <ul>
-                            <li><a href="@Url.Action("Index", "AgriculturalProduct")">原始农产品管理</a></li>
-                            <li><a class="current" href="@Url.Action("Index", "WholeSale")">可批发产品管理</a></li>
+                            <li><a href="@Url.Action("Index", "AgriculturalProduct")">未批发农产品</a></li>
+                            <li><a href="@Url.Action("WholeSold", "WholeSaleProduct")">已批发农产品</a></li>
+                            <li><a  href="@Url.Action("Index", "WholeSale")">可批发产品管理</a></li>
                             <!-- Add class "current" to sub menu items also -->
                             <li><a href="@Url.Action("Index", "DividedProduct")">分割管理</a></li>
                             <li><a href="#">Manage Categories</a></li>
