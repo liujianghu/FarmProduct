@@ -5,18 +5,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Error</title>
+    <title>出错啦</title>
+    <link href="@Url.Content("~/Content/css/errorstyle.css")" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h2>
-        Sorry, an error occurred while processing your request.
-    </h2>
-    <div style="color: Red">
-        Message:
-        @Model.ErrorMessage
+    <div id="error-container">
+        <div id="container">
+            <div id="title">
+                <h1>
+                    对不起, 你访问的页面出现错误了!</h1>
+            </div>
+            <div id="content">
+                <div>
+                    <p class="no-top">
+                        错误如下:</p>
+                    <ul>
+                        <li>@Model.ErrorMessage</li>
+                    </ul>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+            <div id="content">
+                <div>
+                    <p class="no-top">
+                        以下信息对你可能有帮助：</p>
+                    <ul>
+                        <li>@Model.StackTrace</li>
+                    </ul>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="clearfix">
+                </div>
+            </div>
+            <div id="footer">
+                © 2012 All rights reserved. <span class="hostorgcn"><a href="@Url.Action("index", "Home")"
+                    class="hostorgcn" >返回首页</a> </span>
+            </div>
+        </div>
     </div>
-    <div>
-        StackTrace: @Model.StackTrace</div>
-
 </body>
 </html>

@@ -83,18 +83,17 @@
     <Compile Include="Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\ProvinceController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\UserController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\AgriculturalProductEditModelExtension.cs" />
     <Compile Include="Extensions\CompanyEditModelExtension.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\UserEditModelExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgriculturalProductEditModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CompanyEditModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
@@ -106,6 +105,7 @@
   <ItemGroup>
     <Content Include="Content\ChinaArea.xml" />
     <Content Include="Content\Cities.xml" />
+    <Content Include="Content\css\errorstyle.css" />
     <Content Include="Content\css\invalid.css" />
     <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\reset.css" />
@@ -142,6 +142,19 @@
     <Content Include="Content\images\icons\pencil.png" />
     <Content Include="Content\images\icons\pencil_48.png" />
     <Content Include="Content\images\icons\tick_circle.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\jquery-ui\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\jquery-ui\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\jquery-ui\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\jquery-ui\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\jquery-ui\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\jquery-ui\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\menu-current-arrow.gif" />
     <Content Include="Content\images\shortcut-button-bg.gif" />
@@ -216,6 +229,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AgriculturalProduct\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AgriculturalProduct\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

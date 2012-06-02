@@ -7,6 +7,7 @@ using System.Security.Principal;
 
 using FarmProduct.Model;
 using FarmProduct.Web.Common;
+using FarmProduct.Web.Extensions;
 using FarmProduct.Core;
 using FarmProduct.Web.Models;
 
@@ -32,9 +33,57 @@ namespace FarmProduct.Web.Controllers
         }
 
         [UserAuthorize(Role.FarmProductUser)]
+        [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var model = new AgriculturalProductEditModel();
+            return View(model);
+        }
+
+        [UserAuthorize(Role.FarmProductUser)]
+        [HttpPost]
+        public ActionResult Create(AgriculturalProductEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "请输入正确的信息");
+                return View(model);
+            }
+            IIdentity identity = HttpContext.User.Identity;
+            model.InsertByUserName = identity.Name;
+            model.ProductStatus = ProductStatus.Procreative;
+
+
+            AgriculturalProductSvc.Insert(model.ToAgriculturalProduct());
+
+            return RedirectToAction("Index");
+        }
+
+        [UserAuthorize(Role.FarmProductUser)]
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var product = AgriculturalProductSvc.LoadById(id);
+
+            var model = new AgriculturalProductEditModel(product);
+
+            return View(model);
+        }
+
+        [UserAuthorizeAttribute(Role.FarmProductUser)]
+        [HttpPost]
+        public ActionResult Edit(AgriculturalProductEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "请输入正确的信息!");
+                return View(model);
+            }
+            model.ProductStatus = ProductStatus.Procreative;
+
+            AgriculturalProductSvc.Update(model.ToAgriculturalProduct());
+
+            return RedirectToAction("Index");
         }
 
     }

@@ -1,0 +1,119 @@
+﻿@model FarmProduct.Web.Models.AgriculturalProductEditModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/css/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            编辑农产品</h3>
+        <ul class="content-box-tabs">
+            <li><a href="@Url.Action("Edit")" class="default-tab">返回列表</a></li>
+        </ul>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="content-box-content">
+        <div style="color: Red">
+            @Html.ValidationSummary(true, "")
+        </div>
+        <div class="tab-content default-tab" id="tab2">
+            @using (Html.BeginForm("Edit", "AgriculturalProduct", FormMethod.Post, new { @class = "form" }))
+            {
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.InsertByUserName)
+                <fieldset>
+                    <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+                    <p>
+                        <label>
+                            产品名字</label>
+                        @Html.TextBoxFor(model => model.ProductName, new { @class = "text-input small-input datepicker" })
+                        <span class="input-notification success png_bg">必须输入</span>
+                        @Html.ValidationMessageFor(m => m.ProductName)
+                    </p>
+                    <p>
+                        <label>
+                            产品编码</label>
+                        @Html.TextBoxFor(model => model.ProductCode, new { @class = "text-input tiny-input", disabled = "disabled" })
+                    </p>
+                    <p>
+                        <label>
+                            出生日期</label>
+                        @Html.TextBox("BirthDate", Model.BirthDate.ToShortDateString(), new { @class = "text-input tiny-input" })
+                    </p>
+                    <p>
+                        <label>
+                            出栏日期</label>
+                        @Html.TextBox("DeliverDate", Model.DeliverDate.ToShortDateString(), new { @class = "text-input tiny-input", @style = "width:100px" })
+                        @Html.ValidationMessageFor(m => m.DeliverDate)
+                    </p>
+                    <p>
+                        <label>
+                            批次</label>
+                        @Html.TextBoxFor(model => model.Batch, new { @class = "text-input tiny-input", @style = "width:100px" })
+                        <small>请输入数字</small>
+                        @Html.ValidationMessageFor(m => m.Batch, "请输入合法的批次")
+                    </p>
+                    <p>
+                        <label>
+                            品种</label>
+                        @Html.TextBoxFor(model => model.BreedType, new { @class = "text-input tiny-input", @style = "width:100px" })
+                        @Html.ValidationMessageFor(m => m.BreedType)
+                    </p>
+                    <p>
+                        <label>
+                            添加人</label>
+                            @Html.TextBoxFor(model => model.InsertUserRealName, new { @class = "text-input tiny-input", disabled = "disabled" })
+                    </p>
+                    <p>
+                        <label>
+                            添加时间</label>
+                            @Html.TextBoxFor(model => model.InsertDate, new { @class = "text-input tiny-input", disabled = "disabled" })
+                    </p>
+                    <p>
+                        <label>
+                            生长周期</label>
+                        @Html.TextBoxFor(model => model.Batch, new { @class = "text-input tiny-input", @style = "width:100px" })月
+                        <small>请输入数字</small>
+                    </p>
+                    <p>
+                        <label>
+                            体重</label>
+                        @Html.TextBoxFor(model => model.Weight, new { @class = "text-input tiny-input", @style = "width:100px" })公斤
+                        <small>请输入数字</small>
+                    </p>
+                    <p>
+                        <label>
+                            病史</label>
+                        @Html.TextAreaFor(model => model.MedicalHistory, new { @class = "text-input textarea medium-input", @style = "overflow:hidden", rows = "4", cols = "30" })
+                    </p>
+                    <p>
+                        <label>
+                            使用疫苗情况</label>
+                        @Html.TextAreaFor(model => model.VaccineSituation, new { @class = "text-input textarea medium-input", @style = "overflow:hidden", rows = "4", cols = "30" })
+                    </p>
+                    <p>
+                        <label>
+                            备注</label>
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "text-input textarea medium-input", @style = "overflow:hidden", rows = "4", cols = "30" })
+                    </p>
+                    <p>
+                        <input class="button" type="submit" value="保存" />
+                    </p>
+                </fieldset>
+                <div class="clear">
+                </div>
+                <!-- End .clear -->
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#BirthDate").datepicker();
+        $("#DeliverDate").datepicker();
+    });
+</script>

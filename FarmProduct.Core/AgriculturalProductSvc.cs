@@ -9,7 +9,7 @@ using Simple.Data;
 
 namespace FarmProduct.Core
 {
-    public class AgriculturalProductSvc
+    public class AgriculturalProductSvc : BaseSvc
     {
         /// <summary>
         /// 获取当前用户公司农产品
@@ -19,7 +19,7 @@ namespace FarmProduct.Core
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public static Tuple<List<AgriculturalProduct>, int> LoadProductListByProductStatus(
-            string userName
+              string userName
             , int pageIndex
             , int pageSize
             , ProductStatus productStatus)
@@ -38,7 +38,7 @@ namespace FarmProduct.Core
             bool isAdmin = AuthorizationSvc.IsAdministrator(user.UserRole);
 
             List<AgriculturalProduct> list = db.AgriculturalProducts.FindAll(db.AgriculturalProducts.ProductStatus == productStatus
-                                                                    && db.AgriculturalProducts.ProductOwner.Id == user.Company.Id) 
+                                                                    && db.AgriculturalProducts.ProductOwner.Id == user.Company.Id)
                                                               .OrderByDescending(db.AgriculturalProducts.InsertDate)
                                                               .WithTotalCount(out totalCount)
                                                               .Skip(skipCount)
@@ -53,6 +53,7 @@ namespace FarmProduct.Core
             var db = DataBaseHelper.Open();
 
             product.Id = LastIdSvc.GetNextTableId("AgriculturalProducts");
+            product.ProductCode = CalculateProductCode(product.InserBy.Company.Id);
 
             db.AgriculturalProducts.Insert(product);
 
@@ -72,7 +73,7 @@ namespace FarmProduct.Core
             db.AgriculturalProducts.DeleteById(id);
         }
 
-        public static AgriculturalProduct Detail(int id)
+        public static AgriculturalProduct LoadById(int id)
         {
             var db = DataBaseHelper.Open();
             AgriculturalProduct product = db.AgriculturalProducts.FindById(id);

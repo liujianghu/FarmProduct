@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizationSvc.cs" />
+    <Compile Include="BaseSvc.cs" />
     <Compile Include="CitySvc.cs" />
+    <Compile Include="Common\ErrorCode.cs" />
     <Compile Include="CompanySvc.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CountySvc.cs" />
@@ -78,9 +80,7 @@
       <Name>FarmProduct.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

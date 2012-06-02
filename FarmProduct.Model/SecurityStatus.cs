@@ -1,7 +1,7 @@
 ﻿
 namespace FarmProduct.Model
 {
-    public enum SecurityStatus : short
+    public enum SecurityStatus : int
     {
         Safe = 1
     }

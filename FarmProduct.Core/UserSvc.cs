@@ -5,6 +5,8 @@ using FarmProduct.Model;
 using System.Configuration;
 using Simple.Data;
 
+using FarmProduct.Core.Common;
+
 namespace FarmProduct.Core
 {
     public class UserSvc
@@ -39,6 +41,12 @@ namespace FarmProduct.Core
         public static int Insert(User user)
         {
             var db = DataBaseHelper.Open();
+            var existsUser = db.Users.FindByUserName(user.UserName);
+            if (existsUser != null)
+            {
+                return ErrorCode.ExistsSameUser;
+            }
+
             user.Id = LastIdSvc.GetNextTableId("Users");
             db.Users.Insert(user);
 
@@ -87,7 +95,9 @@ namespace FarmProduct.Core
         public static void Delete(int id)
         {
             var db = DataBaseHelper.Open();
-            db.Users.Delete(Id: id);
+            User user = db.Users.FindById(id);
+            user.IsDeleted = true;
+            db.Users.Update(user);
         }
 
         public static bool InitUser(string adminName, string adminPwd)

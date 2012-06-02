@@ -48,6 +48,13 @@ namespace FarmProduct.Web.Controllers
             return View(model);
         }
 
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("LogOn", "Account");
+        }
+
         public ActionResult Init()
         {
             return View();

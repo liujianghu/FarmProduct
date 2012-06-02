@@ -1,7 +1,7 @@
 ﻿
 namespace FarmProduct.Model
 {
-    public enum ProductStatus : short
+    public enum ProductStatus : int
     {
         IsDeleted = -1,
 

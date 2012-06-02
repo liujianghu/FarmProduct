@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using FarmProduct.Core;
+using FarmProduct.Core.Common;
 using FarmProduct.Model;
 using FarmProduct.Web.Common;
 using FarmProduct.Web.Extensions;
@@ -58,7 +59,14 @@ namespace FarmProduct.Web.Controllers
                 return View(model);
             }
 
-            UserSvc.Insert(model.ToUser());
+            int result = UserSvc.Insert(model.ToUser());
+
+            if (result == ErrorCode.ExistsSameUser)
+            {
+                ModelState.AddModelError(string.Empty, "此用户名已存在!");
+                return View(model);
+            }
+
             return RedirectToAction("Index");
         }
 
