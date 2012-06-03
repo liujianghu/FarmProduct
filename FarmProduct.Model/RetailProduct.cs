@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
+using FarmProduct.Model;
+
 namespace FarmProduct.Model
 {
     public class RetailProduct
@@ -11,7 +13,17 @@ namespace FarmProduct.Model
 
         public int AgriculturalProductId { get; set; }
 
+        public string AgriculturalProductName { get; set; }
+
         public int WholeSaleProductId { get; set; }
+
+        public string WholeSaleProductName { get; set; }
+
+        public string ProductName { get; set; }
+
+        public string ProductCode { get; set; }
+
+        public int ParentId { get; set; }
 
         public Company FromCompany { get; set; }
 
@@ -23,9 +35,18 @@ namespace FarmProduct.Model
 
         public int Batch { get; set; }
 
-        public short ProductStatus { get; set; }
+        public ProductStatus ProductStatus { get; set; }
 
-        public short SecurityStatus { get; set; }
+        public SecurityStatus SecurityStatus { get; set; }
+
+        public DateTime RetailedDate { get; set; }
+
+        public RetailProduct()
+        {
+            this.SecurityStatus = Model.SecurityStatus.Safe;
+            this.InsertDate = DateTime.Now;
+            this.ProductStatus = Model.ProductStatus.Retail;
+        }
 
     }
 }

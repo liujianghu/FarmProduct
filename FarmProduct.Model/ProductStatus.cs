@@ -23,7 +23,7 @@ namespace FarmProduct.Model
         /// <summary>
         /// 已分割的批发产品
         /// </summary>
-        DividualWholeSaleProduct = 4,
+        CutWholeSaleProduct = 4,
 
         /// <summary>
         /// 已批发
@@ -38,12 +38,22 @@ namespace FarmProduct.Model
         /// <summary>
         /// 已分割的零售产品
         /// </summary>
-        DividualRetailProduct = 7,
+        CutRetailProduct = 7,
 
         /// <summary>
         /// 已销售
         /// </summary>
-        Retailed = 8
+        Retailed = 8,
+
+        /// <summary>
+        /// 可批发产品
+        /// </summary>
+        CanWholeSale = 9,
+
+        /// <summary>
+        /// 可零售产品
+        /// </summary>
+        CanRetail = 10
 
     }
 }

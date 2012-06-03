@@ -55,6 +55,7 @@
     <Compile Include="Province.cs" />
     <Compile Include="RetailProduct.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="SecurityCheckHistory.cs" />
     <Compile Include="SecurityStatus.cs" />
     <Compile Include="User.cs" />
     <Compile Include="WholeSaleProduct.cs" />

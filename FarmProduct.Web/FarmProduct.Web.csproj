@@ -85,6 +85,8 @@
     <Compile Include="Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\RetailProductController.cs" />
+    <Compile Include="Controllers\SecurityCheckController.cs" />
     <Compile Include="Controllers\UserController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +94,7 @@
     <Compile Include="Extensions\AgriculturalProductEditModelExtension.cs" />
     <Compile Include="Extensions\CompanyEditModelExtension.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Extensions\RetailProductEditModelExtension.cs" />
     <Compile Include="Extensions\UserEditModelExtension.cs" />
     <Compile Include="Extensions\WholeProductEditModelExtension.cs" />
     <Compile Include="Global.asax.cs">
@@ -104,6 +107,9 @@
     <Compile Include="Models\JsonResultModel.cs" />
     <Compile Include="Models\ListViewModel.cs" />
     <Compile Include="Models\LogOnModel.cs" />
+    <Compile Include="Models\RetailProductEditModel.cs" />
+    <Compile Include="Models\SecurityCheckerEditModel.cs" />
+    <Compile Include="Models\SecurityProdutModel.cs" />
     <Compile Include="Models\UserEditModel.cs" />
     <Compile Include="Models\WholeSaleProductEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,6 +262,51 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WholeSaleProduct\MyWholeSaleProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WholeSaleProduct\Cut.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WholeSaleProduct\CutWholeSaleProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WholeSaleProduct\CanSaleProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\WholeSold.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\Detail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\CanCutProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\Cut.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\CutProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\CanRetail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\Retail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RetailProduct\RetailedProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SecurityCheck\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SecurityCheck\ProductList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SecurityCheck\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

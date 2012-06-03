@@ -35,8 +35,6 @@ namespace FarmProduct.Core
                 throw new Exception("当前用户数据不存在.");
             }
 
-            bool isAdmin = AuthorizationSvc.IsAdministrator(user.UserRole);
-
             List<AgriculturalProduct> list = db.AgriculturalProducts.FindAll(db.AgriculturalProducts.ProductStatus == productStatus
                                                                     && db.AgriculturalProducts.ProductOwner.Id == user.Company.Id)
                                                               .OrderByDescending(db.AgriculturalProducts.Id)
@@ -46,6 +44,16 @@ namespace FarmProduct.Core
                                                               .ToList<AgriculturalProduct>();
 
             return new Tuple<List<AgriculturalProduct>, int>(list, totalCount.Value);
+        }
+
+        public static List<AgriculturalProduct> LoadAllProductList()
+        {
+            var db = DataBaseHelper.Open();
+            List<AgriculturalProduct> list = db.AgriculturalProducts.FindAll(db.AgriculturalProducts.ProductStatus != ProductStatus.IsDeleted
+                                                                        && db.AgriculturalProducts.SecurityStatus  == SecurityStatus.Safe)
+                                                              .ToList<AgriculturalProduct>();
+
+            return list;
         }
 
         public static int Insert(AgriculturalProduct product)

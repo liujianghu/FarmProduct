@@ -1,6 +1,6 @@
-﻿@model FarmProduct.Web.Models.WholeSaleProductEditModel
+﻿@model FarmProduct.Web.Models.RetailProductEditModel
 @{
-    ViewBag.Title = "批发产品";
+    ViewBag.Title = "分割产品";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,9 +8,9 @@
     <!-- Start Content Box -->
     <div class="content-box-header">
         <h3>
-            添加产品</h3>
+            分割产品</h3>
         <ul class="content-box-tabs">
-            <li><a href="@Url.Action("WholeSold")" class="default-tab">返回列表</a></li>
+            <li><a href="@Url.Action("CanCutProduct")" class="default-tab">返回列表</a></li>
         </ul>
         <div class="clear">
         </div>
@@ -20,11 +20,24 @@
         @Html.ValidationSummary(true, "")
         </div>
         <div class="tab-content default-tab" id="tab2">
-            @using (Html.BeginForm("Create", "WholeSaleProduct", FormMethod.Post, new { @class = "form" }))
+            @using (Html.BeginForm("Cut", "RetailProduct", FormMethod.Post, new { @class = "form" }))
             {
                 @Html.HiddenFor(model => model.AgriculturalProductId)
+                @Html.HiddenFor(model => model.WholeSaleProductId)
+                @Html.HiddenFor(model => model.ParentId)
+                @Html.HiddenFor(model => model.ToCompanyId)
                 <fieldset>
                     <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+                    <p>
+                        <label>
+                            原始农产品名称</label>
+                         @Html.TextBoxFor(model => model.AgriculturalProductName, new { @class = "text-input small-input datepicker", @readonly = "readonly" })
+                    </p>
+                    <p>
+                        <label>
+                            批发产品名称</label>
+                        @Html.TextBoxFor(model => model.WholeSaleProductName, new { @class = "text-input small-input datepicker", @readonly = "readonly" })
+                    </p>
                     <p>
                         <label>
                             产品名字</label>
@@ -38,12 +51,6 @@
                         @Html.TextBoxFor(model => model.Batch, new { @class = "text-input tiny-input", @style = "width:100px" })
                         <small>请输入数字</small>
                         @Html.ValidationMessageFor(m => m.Batch, "请输入合法的批次")
-                    </p>
-                    <p>
-                        <label>
-                            批发至</label>
-                        @Html.DropDownList("ToCompanyId", new SelectList(Model.ToCompanyList, "Id", "CompanyName"), "请选择企业")
-                        @Html.ValidationMessageFor(m=>m.ToCompanyId)
                     </p>
                     <p>
                         <input class="button" type="submit" value="保存" />

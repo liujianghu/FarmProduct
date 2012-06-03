@@ -1,4 +1,4 @@
-﻿@model FarmProduct.Web.Models.WholeSaleProductEditModel
+﻿@model FarmProduct.Web.Models.RetailProductEditModel
 @{
     ViewBag.Title = "批发产品信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,6 +24,17 @@
                 @Html.HiddenFor(model => model.AgriculturalProductId)
                 <fieldset>
                     <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+
+                    <p>
+                        <label>
+                            农产品名称</label>
+                        @Html.TextBoxFor(model => model.AgriculturalProductName, new { @class = "text-input small-input datepicker" })
+                    </p>
+                    <p>
+                        <label>
+                            批发产品名称</label>
+                        @Html.TextBoxFor(model => model.WholeSaleProductName, new { @class = "text-input small-input datepicker" })
+                    </p>
                     <p>
                         <label>
                             产品名字</label>

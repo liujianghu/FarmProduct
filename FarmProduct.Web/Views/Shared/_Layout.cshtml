@@ -20,60 +20,75 @@
                     <a href="@Url.Action("index", "Home")">赣农畜产品监管系统</a></h1>
                 <!-- Logo (221px wide) -->
                 <a href="@Url.Action("index", "Home")">
-                    <img id="logo" src="@Url.Content("~/Content/images/logo.png")" alt="Simpla Admin logo" /></a>
+                    <img id="logo" src="@Url.Content("~/Content/images/logo.jpg")" alt="Simpla Admin logo" /></a>
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, <a href="#" title="Edit your profile">管理员</a>, you have <a href="#messages"
-                        rel="modal" title="3 Messages">3 Messages</a><br />
-                    <br />
-                    <a href="#" title="View the Site">View the Site</a> | <a href="@Url.Action("LogOff", "Account")" title="Sign Out">注销</a>
+                    <a href="@Url.Action("index", "Home")" title="View the Site">回到首页</a> | <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
+                        注销</a>
                 </div>
                 <ul id="main-nav">
                     <!-- Accordion Menu -->
                     <li><a href="@Url.Action("index", "Home")" class="nav-top-item no-submenu">
                         <!-- Add the class "no-submenu" to menu items with no sub menu -->
                         首页 </a></li>
-                    <li><a href="#" class="nav-top-item ">
-                        <!-- Add the class "current" to current menu item -->
-                        产品管理 </a>
-                        <ul>
-                            <li><a href="@Url.Action("Index", "AgriculturalProduct")">未批发农产品</a></li>
-                            <li><a href="@Url.Action("WholeSold", "WholeSaleProduct")">已批发农产品</a></li>
-                            <li><a  href="@Url.Action("Index", "WholeSale")">可批发产品管理</a></li>
-                            <!-- Add class "current" to sub menu items also -->
-                            <li><a href="@Url.Action("Index", "DividedProduct")">分割管理</a></li>
-                            <li><a href="#">Manage Categories</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav-top-item">预警管理 </a>
-                        <ul>
-                            <li><a href="#">Create a new Page</a></li>
-                            <li><a href="#">Manage Pages</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav-top-item">商家管理 </a>
-                        <ul>
-                            <li><a href="@Url.Action("index", "Company")">商家管理</a></li>
-                            <li><a href="#">Manage Galleries</a></li>
-                            <li><a href="#">Manage Albums</a></li>
-                            <li><a href="#">Gallery Settings</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav-top-item">用户管理 </a>
-                        <ul>
-                            <li><a href="@Url.Action("index", "User")">用户管理</a></li>
-                            <li><a href="#">Add a new Event</a></li>
-                            <li><a href="#">Calendar Settings</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="nav-top-item">个人设置 </a>
-                        <ul>
-                            <li><a href="#">General</a></li>
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Your Profile</a></li>
-                            <li><a href="#">Users and Permissions</a></li>
-                        </ul>
-                    </li>
+                    @if (FarmProduct.Web.Common.Utilts.IsAuthorized(FarmProduct.Model.Role.FarmProductUser))
+                    {
+                        <li><a href="#" class="nav-top-item ">
+                            <!-- Add the class "current" to current menu item -->
+                            农产品管理 </a>
+                            <ul>
+                                <li><a href="@Url.Action("Index", "AgriculturalProduct")">未批发农产品</a></li>
+                                <li><a href="@Url.Action("WholeSold", "WholeSaleProduct")">已批发农产品</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (FarmProduct.Web.Common.Utilts.IsAuthorized(FarmProduct.Model.Role.WholeSaleUser))
+                    {
+                        <li><a href="#" class="nav-top-item ">
+                            <!-- Add the class "current" to current menu item -->
+                            批发管理 </a>
+                            <ul>
+                                <li><a  href="@Url.Action("CanSaleProduct", "WholeSaleProduct")">可批发产品管理</a></li>
+                                <li><a href="@Url.Action("MyWholeSaleProduct", "WholeSaleProduct")">可分割产品</a></li>
+                                <li><a href="@Url.Action("CutWholeSaleProduct", "WholeSaleProduct")">已分割产品</a></li>
+                                <li><a href="@Url.Action("WholeSold", "RetailProduct")">已批发产品</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (FarmProduct.Web.Common.Utilts.IsAuthorized(FarmProduct.Model.Role.RetailUser))
+                    {
+                        <li><a href="#" class="nav-top-item ">
+                            <!-- Add the class "current" to current menu item -->
+                            零售管理 </a>
+                            <ul>
+                                <li><a href="@Url.Action("CanCutProduct", "RetailProduct")">可分割产品</a></li>
+                                <li><a href="@Url.Action("CutProduct", "RetailProduct")">已分割产品</a></li>
+                                <li><a href="@Url.Action("CanRetail", "RetailProduct")">可销售产品</a></li>
+                                <li><a href="@Url.Action("RetailedProduct", "RetailProduct")">已销售产品</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (FarmProduct.Web.Common.Utilts.IsAuthorized(FarmProduct.Model.Role.SecurityChecker))
+                    {
+                        <li><a href="#" class="nav-top-item">预警管理 </a>
+                            <ul>
+                                <li><a href="@Url.Action("Index", "SecurityCheck")">预警产品列表</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (FarmProduct.Web.Common.Utilts.IsAuthorized(FarmProduct.Model.Role.Admin))
+                    {
+                        <li><a href="#" class="nav-top-item">商家管理 </a>
+                            <ul>
+                                <li><a href="@Url.Action("index", "Company")">商家管理</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="nav-top-item">用户管理 </a>
+                            <ul>
+                                <li><a href="@Url.Action("index", "User")">用户管理</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <!-- End #main-nav -->
                 <div id="messages" style="display: none">

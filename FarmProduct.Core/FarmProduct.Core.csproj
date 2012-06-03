@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LastIdSvc.cs" />
     <Compile Include="ProvinceSvc.cs" />
+    <Compile Include="RetailProductSvc.cs" />
+    <Compile Include="SecurityCheckSvc.cs" />
     <Compile Include="UserSvc.cs" />
     <Compile Include="WholeSaleProductSvc.cs" />
   </ItemGroup>

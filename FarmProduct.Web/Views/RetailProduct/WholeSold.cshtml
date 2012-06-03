@@ -1,7 +1,7 @@
 ﻿@using FarmProduct.Model
-@model FarmProduct.Web.Models.ListViewModel<WholeSaleProduct>
+@model FarmProduct.Web.Models.ListViewModel<RetailProduct>
 @{
-    ViewBag.Title = "我的可分割产品";
+    ViewBag.Title = "WholeSold";
     int j = 0;
     string strStyle = "";
 }
@@ -9,9 +9,9 @@
     <!-- Start Content Box -->
     <div class="content-box-header">
         <h3>
-            可分割产品列表</h3>
+            已批发产品列表</h3>
         <ul class="content-box-tabs">
-            <li><a href="@Url.Action("CanSale", "WholeSaleProdut")" class="default-tab">未批发产品</a></li>
+            <li><a href="@Url.Action("CanSaleProduct", "WholeSaleProduct")" class="default-tab">未批发产品</a></li>
         </ul>
         <div class="clear">
         </div>
@@ -25,7 +25,7 @@
                     <img src="@Url.Content("~/Content/images/icons/cross_grey_small.png")" title="Close this notification"
                         alt="close" /></a>
                 <div>
-                    这是你公司可分割的产品列表
+                    这是你公司已批发的产品列表
                 </div>
             </div>
             <table>
@@ -38,7 +38,7 @@
                             批发产品名称
                         </th>
                         <th>
-                            批发企业
+                            接收企业
                         </th>
                         <th>
                             批发人
@@ -55,31 +55,31 @@
                     <tr>
                         <td colspan="6">
                             <div class="pagination">
-                                <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = 1 })" title="First Page">&laquo;
+                                <a href="@Url.Action("WholeSold", new { pageIndex = 1 })" title="First Page">&laquo;
                                     First</a>
                                 @if (Model.CurrentPageIndex > 1)
                                 {
-                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.CurrentPageIndex - 1 })" title="Previous Page">
+                                    <a href="@Url.Action("WholeSold", new { pageIndex = @Model.CurrentPageIndex - 1 })" title="Previous Page">
                                         &laquo; Previous</a> 
                                 }
                                 @for (int i = 1; i <= Model.PageCount; i++)
                                 {
                                     if (Model.CurrentPageIndex == i)
                                     {
-                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = i })" class="number current" title="@i">@i</a>
+                                    <a href="@Url.Action("WholeSold", new { pageIndex = i })" class="number current" title="@i">@i</a>
                                     }
                                     else
                                     {
-                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = i })" class="number" title="1">@i</a>
+                                    <a href="@Url.Action("WholeSold", new { pageIndex = i })" class="number" title="1">@i</a>
                                     }
 
                                 }
                                 @if (Model.CurrentPageIndex < Model.PageCount)
                                 {
-                                    <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.CurrentPageIndex + 1 })" title="Next Page">
+                                    <a href="@Url.Action("WholeSold", new { pageIndex = @Model.CurrentPageIndex + 1 })" title="Next Page">
                                         Next &raquo;</a>
                                 }
-                                <a href="@Url.Action("MyWholeSaleProduct", new { pageIndex = @Model.PageCount })" title="Last Page">
+                                <a href="@Url.Action("WholeSold", new { pageIndex = @Model.PageCount })" title="Last Page">
                                     Last &raquo;</a>
                             </div>
                             <!-- End .pagination -->
@@ -107,7 +107,7 @@
                                 @item.ProductName
                             </td>
                             <td>
-                                @item.FromCompany.CompanyName
+                                @item.ToCompany.CompanyName
                             </td>
                             <td>
                                 @item.InsertBy.RealName
@@ -117,13 +117,10 @@
                             </td>
                             <td>
                                 <!-- Icons -->
-                                <a href="@Url.Action("Detail", "WholeSaleProduct", new { id = @item.Id })" title="查看" target="_blank">
+                                <a href="@Url.Action("Detail", "RetailProduct", new { id = @item.Id })" title="查看" target="_blank">
                                     查看</a>
-                                @if (item.ProductStatus == ProductStatus.WholeSale && item.SecurityStatus == SecurityStatus.Safe)
+                                @if (item.ProductStatus == ProductStatus.Retail && item.SecurityStatus == SecurityStatus.Safe)
                                 {
-                                    <a href="@Url.Action("Cut", "WholeSaleProduct", new { agriculturalProductId = @item.AgriculturalProductId, parentId = @item.Id })" title="分割">
-                                    分割</a>
-                                    
                                     <a href="javascript:;" onclick="deleteProduct(@item.Id)" title="Delete">
                                         <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" /></a>
                                 }
@@ -155,7 +152,7 @@
                     alert(response.ErrorMessage);
                 }
                 else {
-                    window.location.href = '@Url.Action("MyWholeSaleProduct") '
+                    window.location.href = '@Url.Action("WholeSold") '
                 }
             }
         });

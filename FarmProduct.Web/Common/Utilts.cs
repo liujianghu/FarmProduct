@@ -8,6 +8,7 @@ using System.Xml;
 using FarmProduct.Model;
 using FarmProduct.Core;
 using System.Xml.Linq;
+using System.Security.Principal;
 
 namespace FarmProduct.Web.Common
 {
@@ -189,7 +190,19 @@ namespace FarmProduct.Web.Common
             }
         }
 
-
+        public static bool IsAuthorized(Role role)
+        {
+            IIdentity id = HttpContext.Current.User.Identity;
+            var user = UserSvc.LoadByUserName(id.Name);
+            if (role == Role.Admin)
+            {
+                return AuthorizationSvc.IsAdministrator(user.UserRole);
+            }
+            else
+            {
+                return (AuthorizationSvc.IsAuthorized(user, role) && !AuthorizationSvc.IsAdministrator(user.UserRole));
+            }
+        }
 
     }
 }

@@ -1,0 +1,103 @@
+﻿@using FarmProduct.Model
+@model FarmProduct.Web.Models.ListViewModel<SecurityCheckHistory>
+@{
+    ViewBag.Title = "预警产品列表";
+    int j = 0;
+    string strStyle = "";
+}
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            预警产品列表</h3>
+        <ul class="content-box-tabs">
+            <li><a href="@Url.Action("ProductList", "SecurityCheck")" class="default-tab">添加预警产品</a></li>
+        </ul>
+        <div class="clear">
+        </div>
+    </div>
+    <!-- End .content-box-header -->
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <!-- This is the target div. id must match the href of this div's tab -->
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            产品名称
+                        </th>
+                        <th>
+                            产品类别
+                        </th>
+                        <th>
+                            产品所属企业
+                        </th>
+                        <th>
+                            预警等级
+                        </th>
+                        <th>
+                            批发人
+                        </th>
+                        <th>
+                            预警时间
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            
+                            <!-- End .pagination -->
+                            <div class="clear">
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        if (j % 2 == 0)
+                        {
+                            strStyle = "alt-row";
+                        }
+                        else
+                        {
+                            strStyle = "";
+                        }
+                        <tr class="@strStyle">
+                            <td>
+                                @item.ProductName
+                            </td>
+                            <td>
+                                @item.ProductTypeName
+                            </td>
+                            <td>
+                                @item.ProductOwer.CompanyName
+                            </td>
+                            <td>
+                                @item.SecurityLevel
+                            </td>
+                            <td>
+                                @item.InsertBy.RealName
+                            </td>
+                            <td>
+                                @item.InsertDate.ToString("yyyy-MM-dd HH:mm")
+                            </td>
+                            <td>
+                                @item.InsertReason
+                            </td>
+                        </tr>
+                                j++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End #tab1 -->
+        <!-- End #tab2 -->
+    </div>
+    <!-- End .content-box-content -->
+</div>
